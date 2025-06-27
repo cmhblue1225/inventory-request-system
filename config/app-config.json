@@ -1,0 +1,61 @@
+{
+  "app": {
+    "name": "입고요청서 시스템",
+    "version": "1.1.0",
+    "description": "완전 오프라인 지원 웹 기반 입고요청서 작성, 서명, 엑셀 출력 및 인쇄 시스템",
+    "author": "개발팀",
+    "created": "2025-06-26",
+    "updated": "2025-06-26"
+  },
+  "settings": {
+    "autoSave": true,
+    "offlineSupport": true,
+    "defaultValues": {
+      "reqDate": "auto",
+      "reqUser": "홍길동",
+      "refDept": "구매팀"
+    },
+    "validation": {
+      "required": ["reqDate", "reqNo", "reqUser", "inDate"],
+      "maxItems": 10
+    },
+    "storage": {
+      "localStorageKey": "입고요청서_임시저장",
+      "autoSaveInterval": 30000,
+      "autoSaveEvents": ["excel_export", "print"],
+      "includeSignatures": true
+    }
+  },
+  "libraries": {
+    "local": true,
+    "versions": {
+      "jquery": "3.6.0",
+      "jSignature": "2.1.2",
+      "exceljs": "4.3.0",
+      "fileSaver": "2.0.5"
+    },
+    "sizes": {
+      "jquery": "89KB",
+      "jSignature": "24KB", 
+      "exceljs": "925KB",
+      "fileSaver": "3KB"
+    }
+  },
+  "excel": {
+    "fileName": "입고요청서.xlsx",
+    "sheetName": "입고요청서",
+    "formatting": {
+      "font": "맑은 고딕",
+      "titleSize": 16,
+      "normalSize": 14,
+      "smallSize": 11
+    },
+    "includeSignatures": true
+  },
+  "print": {
+    "pageSize": "A4",
+    "orientation": "landscape",
+    "margin": "5mm",
+    "includeSignatures": true
+  }
+}

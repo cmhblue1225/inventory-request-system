@@ -1,0 +1,293 @@
+body { 
+  font-family: '맑은 고딕', Arial, sans-serif; 
+  margin: 20px; 
+} 
+
+table { 
+  border-collapse: collapse; 
+  margin-bottom: 10px; 
+} 
+
+th, td { 
+  border: 1px solid #aaa; 
+  padding: 4px 8px; 
+  text-align: center; 
+  font-size: 14px; 
+} 
+
+th { 
+  background: #f1f1f1; 
+} 
+
+input[type="text"], input[type="number"], input[type="date"], input[type="email"] { 
+  width: 110px; 
+  font-size: 14px; 
+  padding: 2px 4px; 
+} 
+
+input[type="number"] { 
+  width: 70px; 
+} 
+
+.wide { 
+  width: 200px; 
+} 
+
+.title { 
+  font-size: 22px; 
+  font-weight: bold; 
+  padding: 12px 0; 
+  text-align: center; 
+} 
+
+.bold { 
+  font-weight: bold; 
+} 
+
+.signature { 
+  width: 120px; 
+  height: 60px; 
+} 
+
+.ref-dept-wrap { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 5px; 
+} 
+
+.ref-dept-input { 
+  margin-bottom: 2px; 
+} 
+
+.add-btn, .remove-btn { 
+  padding: 2px 6px; 
+  font-size: 13px; 
+} 
+
+textarea { 
+  min-width: 500px; 
+  min-height: 60px; 
+  width: 99%; 
+  font-size: 14px; 
+} 
+
+.signature-pad-wrap { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+} 
+
+.signature-pad { 
+  border: 1px solid #aaa; 
+  background: #fff; 
+  width: 120px; 
+  height: 60px; 
+} 
+
+.clear-signature { 
+  margin-top: 4px; 
+}
+
+/* 인쇄용 CSS */
+.print-only { 
+  display: none; 
+}
+
+@media print {
+  /* 화면 요소 숨기기 */
+  button, .clear-signature { 
+    display: none !important; 
+  }
+  
+  /* 인쇄 전용 요소 보이기 */
+  .print-only { 
+    display: block !important; 
+  }
+  
+  /* 페이지 설정 */
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+  
+  /* 전체 스타일 조정 */
+  body { 
+    margin: 0; 
+    padding: 0; 
+    font-size: 12px; 
+  }
+  
+  table { 
+    page-break-inside: avoid; 
+    width: 100%; 
+  }
+  
+  th, td { 
+    padding: 3px 5px; 
+    font-size: 11px; 
+  }
+  
+  .title { 
+    font-size: 20px; 
+  }
+  
+  textarea { 
+    border: 1px solid #aaa; 
+    resize: none; 
+    min-height: 40px; 
+  }
+  
+  input { 
+    border: none; 
+    background: transparent; 
+    text-align: center; 
+  }
+  
+  .signature-pad { 
+    border: 1px solid #aaa !important; 
+  }
+}
+
+/* =========================
+   다이얼로그 스타일
+   ========================= */
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    min-width: 400px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.dialog h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.dialog-buttons {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.dialog-buttons button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dialog-buttons button:first-child {
+    background-color: #007bff;
+    color: white;
+}
+
+.dialog-buttons button:last-child {
+    background-color: #6c757d;
+    color: white;
+}
+
+.saved-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.saved-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #f1f3f4;
+    margin-bottom: 5px;
+}
+
+.saved-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.saved-item-info {
+    flex: 1;
+}
+
+.saved-item-name {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.saved-item-date {
+    font-size: 12px;
+    color: #666;
+}
+
+.saved-item-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.saved-item-actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.load-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.empty-list {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}

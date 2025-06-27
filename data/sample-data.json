@@ -1,0 +1,108 @@
+{
+  "defaultItems": [
+    {
+      "item": "A4 특수용지",
+      "spec": "80g, 500매",
+      "unit": "박스",
+      "qty": 10,
+      "price": 4000,
+      "amount": 40000,
+      "vendor": "(주)엔케이",
+      "category": "문구/사무용품",
+      "warehouse": "본사 창고",
+      "note": "일반용"
+    },
+    {
+      "item": "2공 펀치",
+      "spec": "70mm 2공 철제식",
+      "unit": "개",
+      "qty": 100,
+      "price": 500,
+      "amount": 50000,
+      "vendor": "(주)엔케이",
+      "category": "문구/사무용품",
+      "warehouse": "본사 창고",
+      "note": "사무용"
+    },
+    {
+      "item": "박스테이프",
+      "spec": "48mm x 40m",
+      "unit": "롤",
+      "qty": 20,
+      "price": 2500,
+      "amount": 50000,
+      "vendor": "(주)엔케이",
+      "category": "문구/사무용품",
+      "warehouse": "본사 창고",
+      "note": "포장용"
+    },
+    {
+      "item": "복사용지",
+      "spec": "80g, 100매",
+      "unit": "묶음",
+      "qty": 5,
+      "price": 900,
+      "amount": 4500,
+      "vendor": "(주)엔케이",
+      "category": "문구/사무용품",
+      "warehouse": "본사 창고",
+      "note": "문서전용"
+    },
+    {
+      "item": "클리어파일",
+      "spec": "A4 투명",
+      "unit": "개",
+      "qty": 50,
+      "price": 300,
+      "amount": 15000,
+      "vendor": "(주)엔케이",
+      "category": "문구/사무용품",
+      "warehouse": "본사 창고",
+      "note": "문서정리용"
+    }
+  ],
+  "vendors": [
+    {
+      "name": "(주)엔케이",
+      "manager": "김민수 대리",
+      "contact": "010-1234-5678",
+      "email": "minsu.kim@supplier.co.kr"
+    },
+    {
+      "name": "(주)오피스마트",
+      "manager": "이영희 과장",
+      "contact": "010-2345-6789",
+      "email": "younghee.lee@officemart.co.kr"
+    },
+    {
+      "name": "(주)스테이셔너리",
+      "manager": "박철수 팀장",
+      "contact": "010-3456-7890",
+      "email": "chulsoo.park@stationery.co.kr"
+    }
+  ],
+  "categories": [
+    "문구/사무용품",
+    "IT/전자제품",
+    "가구/인테리어",
+    "청소/위생용품",
+    "포장/물류용품",
+    "기타"
+  ],
+  "warehouses": [
+    "본사 창고",
+    "제2창고",
+    "임시보관소",
+    "냉장창고",
+    "특수보관창고"
+  ],
+  "departments": [
+    "구매팀",
+    "영업팀",
+    "마케팅팀",
+    "인사팀",
+    "재무팀",
+    "IT팀",
+    "생산팀"
+  ]
+}

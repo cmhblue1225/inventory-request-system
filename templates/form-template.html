@@ -1,0 +1,141 @@
+<!-- 입고요청서 폼 템플릿 -->
+<div class="title">입고요청서</div>
+
+<form id="inForm" onsubmit="return false;">
+  <!-- 기본 정보 테이블 -->
+  <table>
+    <tr>
+      <th>요청일자</th>
+      <td><input type="date" id="reqDate" value="2025-06-19"></td>
+      <th>요청번호</th>
+      <td><input type="text" id="reqNo" value="1"></td>
+      <th>요청자</th>
+      <td><input type="text" id="reqUser" value="홍길동"></td>
+      <th>입고 예정일</th>
+      <td><input type="date" id="inDate" value="2025-06-26"></td>
+    </tr>
+    <tr>
+      <th>참조부서</th>
+      <td colspan="7">
+        <div id="refDeptWrap" class="ref-dept-wrap">
+          <input type="text" class="ref-dept-input" name="refDept" value="구매팀">
+        </div>
+        <button type="button" class="add-btn" onclick="addRefDept()">＋</button>
+      </td>
+    </tr>
+  </table>
+
+  <!-- 품목 테이블 -->
+  <table id="itemTable">
+    <tr>
+      <th>순번</th>
+      <th>품명</th>
+      <th>규격</th>
+      <th>단위</th>
+      <th>수량</th>
+      <th>단가</th>
+      <th>금액</th>
+      <th>거래처</th>
+      <th>카테고리</th>
+      <th>입고 창고</th>
+      <th>비고</th>
+    </tr>
+    <!-- 품목 행들은 JavaScript로 동적 생성 -->
+    <script>
+      const defaultItems = [
+        ["A4 특수용지", "80g, 500매", "박스", 10, 4000, 40000, "(주)엔케이", "문구/사무용품", "본사 창고", "일반용"],
+        ["2공 펀치", "70mm 2공 철제식", "개", 100, 500, 50000, "(주)엔케이", "문구/사무용품", "본사 창고", "사무용"],
+        ["박스테이프", "48mm x 40m", "롤", 20, 2500, 50000, "(주)엔케이", "문구/사무용품", "본사 창고", "포장용"],
+        ["복사용지", "80g, 100매", "묶음", 5, 900, 4500, "(주)엔케이", "문구/사무용품", "본사 창고", "문서전용"],
+        ["클리어파일", "A4 투명", "개", 50, 300, 15000, "(주)엔케이", "문구/사무용품", "본사 창고", "문서정리용"]
+      ];
+
+      for(let i=0;i<5;i++) {
+        document.write('<tr>');
+        document.write(`<td>${i+1}</td>`);
+        document.write(`<td><input type="text" id="item${i}" value="${defaultItems[i][0]}"></td>`);
+        document.write(`<td><input type="text" id="spec${i}" value="${defaultItems[i][1]}"></td>`);
+        document.write(`<td><input type="text" id="unit${i}" value="${defaultItems[i][2]}"></td>`);
+        document.write(`<td><input type="number" id="qty${i}" value="${defaultItems[i][3]}"></td>`);
+        document.write(`<td><input type="number" id="price${i}" value="${defaultItems[i][4]}"></td>`);
+        document.write(`<td><input type="number" id="amount${i}" value="${defaultItems[i][5]}" readonly></td>`);
+        document.write(`<td><input type="text" id="vendor${i}" value="${defaultItems[i][6]}"></td>`);
+        document.write(`<td><input type="text" id="cat${i}" value="${defaultItems[i][7]}"></td>`);
+        document.write(`<td><input type="text" id="wh${i}" value="${defaultItems[i][8]}"></td>`);
+        document.write(`<td><input type="text" id="note${i}" value="${defaultItems[i][9]}"></td>`);
+        document.write('</tr>');
+      }
+    </script>
+    
+    <!-- 빈 품목 행들 -->
+    <tr><td>6</td><td><input type="text" id="item5"></td><td><input type="text" id="spec5"></td><td><input type="text" id="unit5"></td><td><input type="number" id="qty5"></td><td><input type="number" id="price5"></td><td><input type="number" id="amount5" readonly></td><td><input type="text" id="vendor5"></td><td><input type="text" id="cat5"></td><td><input type="text" id="wh5"></td><td><input type="text" id="note5"></td></tr>
+    <tr><td>7</td><td><input type="text" id="item6"></td><td><input type="text" id="spec6"></td><td><input type="text" id="unit6"></td><td><input type="number" id="qty6"></td><td><input type="number" id="price6"></td><td><input type="number" id="amount6" readonly></td><td><input type="text" id="vendor6"></td><td><input type="text" id="cat6"></td><td><input type="text" id="wh6"></td><td><input type="text" id="note6"></td></tr>
+    <tr><td>8</td><td><input type="text" id="item7"></td><td><input type="text" id="spec7"></td><td><input type="text" id="unit7"></td><td><input type="number" id="qty7"></td><td><input type="number" id="price7"></td><td><input type="number" id="amount7" readonly></td><td><input type="text" id="vendor7"></td><td><input type="text" id="cat7"></td><td><input type="text" id="wh7"></td><td><input type="text" id="note7"></td></tr>
+    <tr><td>9</td><td><input type="text" id="item8"></td><td><input type="text" id="spec8"></td><td><input type="text" id="unit8"></td><td><input type="number" id="qty8"></td><td><input type="number" id="price8"></td><td><input type="number" id="amount8" readonly></td><td><input type="text" id="vendor8"></td><td><input type="text" id="cat8"></td><td><input type="text" id="wh8"></td><td><input type="text" id="note8"></td></tr>
+    <tr><td>10</td><td><input type="text" id="item9"></td><td><input type="text" id="spec9"></td><td><input type="text" id="unit9"></td><td><input type="number" id="qty9"></td><td><input type="number" id="price9"></td><td><input type="number" id="amount9" readonly></td><td><input type="text" id="vendor9"></td><td><input type="text" id="cat9"></td><td><input type="text" id="wh9"></td><td><input type="text" id="note9"></td></tr>
+    
+    <!-- 합계 행 -->
+    <tr>
+      <td colspan="6" class="bold" style="text-align:right;">합계</td>
+      <td class="bold"><input type="number" id="total" value="159500" readonly></td>
+      <td colspan="4"></td>
+    </tr>
+  </table>
+
+  <!-- 비고 테이블 -->
+  <table>
+    <tr>
+      <th>비고</th>
+      <td colspan="10">
+        <textarea id="remark">모든 품목은 6월 26일까지 입고 완료 요망.</textarea>
+      </td>
+    </tr>
+  </table>
+
+  <!-- 거래처 정보 테이블 -->
+  <table>
+    <tr>
+      <th>거래처 담당자</th>
+      <td><input type="text" id="manager" value="김민수 대리"></td>
+      <th>거래처 연락처</th>
+      <td><input type="text" id="contact" value="010-1234-5678"></td>
+      <th>거래처 이메일</th>
+      <td><input type="email" id="email" value="minsu.kim@supplier.co.kr"></td>
+    </tr>
+  </table>
+
+  <!-- 서명 테이블 -->
+  <table>
+    <tr>
+      <th>요청자 서명</th>
+      <td class="signature">
+        <div class="signature-pad-wrap">
+          <div id="signature-request" class="signature-pad"></div>
+          <button type="button" class="clear-signature" id="clear-signature-request">지우기</button>
+        </div>
+      </td>
+      <th>검토자 서명</th>
+      <td class="signature">
+        <div class="signature-pad-wrap">
+          <div id="signature-review" class="signature-pad"></div>
+          <button type="button" class="clear-signature" id="clear-signature-review">지우기</button>
+        </div>
+      </td>
+      <th>승인자 서명</th>
+      <td class="signature">
+        <div class="signature-pad-wrap">
+          <div id="signature-approve" class="signature-pad"></div>
+          <button type="button" class="clear-signature" id="clear-signature-approve">지우기</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <br>
+
+  <!-- 액션 버튼들 -->
+  <button type="button" onclick="downloadExcel()">엑셀로 출력</button>
+  <button type="button" onclick="printDocument()">인쇄하기</button>
+  <button type="button" onclick="saveToLocalStorage()">임시저장</button>
+  <button type="button" onclick="loadFromLocalStorage()">불러오기</button>
+</form>
