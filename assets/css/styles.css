@@ -1,47 +1,79 @@
+/* 기본 스타일 */
 body { 
-  font-family: '맑은 고딕', Arial, sans-serif; 
+  font-family: '맑은 고딕', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   margin: 20px; 
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  line-height: 1.6;
 } 
 
+/* 테이블 스타일 개선 */
 table { 
   border-collapse: collapse; 
-  margin-bottom: 10px; 
+  margin-bottom: 15px;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 } 
 
 th, td { 
-  border: 1px solid #aaa; 
-  padding: 4px 8px; 
+  border: 1px solid #e1e5e9; 
+  padding: 12px 8px; 
   text-align: center; 
-  font-size: 14px; 
+  font-size: 14px;
+  transition: all 0.3s ease;
 } 
 
 th { 
-  background: #f1f1f1; 
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 } 
 
+/* 입력 필드 스타일 개선 */
 input[type="text"], input[type="number"], input[type="date"], input[type="email"] { 
   width: 110px; 
   font-size: 14px; 
-  padding: 2px 4px; 
+  padding: 8px 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: #fafbfc;
 } 
 
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="email"]:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+  outline: none;
+  background: white;
+}
+
 input[type="number"] { 
-  width: 70px; 
+  width: 85px; 
 } 
 
 .wide { 
-  width: 200px; 
+  width: 250px; 
 } 
 
 .title { 
-  font-size: 22px; 
-  font-weight: bold; 
-  padding: 12px 0; 
-  text-align: center; 
+  font-size: 28px; 
+  font-weight: 700; 
+  padding: 20px 0; 
+  text-align: center;
+  color: #2c3e50;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 } 
 
 .bold { 
-  font-weight: bold; 
+  font-weight: 600; 
 } 
 
 .signature { 
@@ -59,33 +91,175 @@ input[type="number"] {
   margin-bottom: 2px; 
 } 
 
+/* 버튼 스타일 개선 */
+button {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
 .add-btn, .remove-btn { 
-  padding: 2px 6px; 
-  font-size: 13px; 
+  padding: 8px 12px; 
+  font-size: 14px;
+  min-width: 40px;
 } 
 
+.add-btn {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+}
+
+.remove-btn {
+  background: linear-gradient(45deg, #dc3545, #c82333);
+  color: white;
+}
+
+/* 메인 액션 버튼들 */
+button[onclick*="downloadExcel"] {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  margin: 10px 5px;
+}
+
+button[onclick*="printDocument"] {
+  background: linear-gradient(45deg, #17a2b8, #138496);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  margin: 10px 5px;
+}
+
+button[onclick*="showSaveDialog"] {
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  margin: 10px 5px;
+}
+
+button[onclick*="showLoadDialog"] {
+  background: linear-gradient(45deg, #6f42c1, #5a2d91);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  margin: 10px 5px;
+}
+
+/* 텍스트 영역 스타일 개선 */
 textarea { 
   min-width: 500px; 
-  min-height: 60px; 
+  min-height: 80px; 
   width: 99%; 
-  font-size: 14px; 
+  font-size: 14px;
+  padding: 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: all 0.3s ease;
+  background: #fafbfc;
+} 
+
+textarea:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+  outline: none;
+  background: white;
 } 
 
 .signature-pad-wrap { 
   display: flex; 
   flex-direction: column; 
-  align-items: center; 
+  align-items: center;
+  gap: 8px;
 } 
 
 .signature-pad { 
-  border: 1px solid #aaa; 
+  border: 2px solid #e1e5e9; 
   background: #fff; 
   width: 120px; 
-  height: 60px; 
+  height: 60px;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 } 
 
+.signature-pad:hover {
+  border-color: #667eea;
+}
+
 .clear-signature { 
-  margin-top: 4px; 
+  background: linear-gradient(45deg, #ffc107, #e0a800);
+  color: #212529;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-signature:hover {
+  background: linear-gradient(45deg, #e0a800, #d39e00);
+  transform: translateY(-1px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  body {
+    margin: 10px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  table {
+    font-size: 12px;
+  }
+  
+  th, td {
+    padding: 8px 4px;
+  }
+  
+  input[type="text"], input[type="number"], input[type="date"], input[type="email"] {
+    width: 90px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  
+  textarea {
+    min-width: 300px;
+    font-size: 12px;
+  }
+  
+  button {
+    padding: 8px 16px;
+    font-size: 14px;
+    margin: 5px 2px;
+  }
+}
+
+/* 테이블 행 호버 효과 */
+tbody tr:hover {
+  background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+  transform: scale(1.01);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 /* 인쇄용 CSS */

@@ -1,5 +1,22 @@
-// jSignature 패드 3개 초기화 
+// 페이지 로드 시 초기화
 $(function(){ 
+  // 오늘 날짜를 기본값으로 설정
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('reqDate').value = today;
+  
+  // 입고 예정일을 일주일 후로 설정
+  const nextWeek = new Date();
+  nextWeek.setDate(nextWeek.getDate() + 7);
+  document.getElementById('inDate').value = nextWeek.toISOString().split('T')[0];
+  
+  // 요청번호 자동 생성
+  const reqNo = 'REQ-' + today.replace(/-/g, '') + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+  document.getElementById('reqNo').value = reqNo;
+
+  // 샘플 데이터 입력 시 사라지는 기능
+  setupSampleDataInputs();
+
+  // jSignature 패드 3개 초기화 
   $("#signature-request").jSignature({ width: 120, height: 60, color: "#111", lineWidth: 2, backgroundColor: "#fff" }); 
   $("#signature-review").jSignature({ width: 120, height: 60, color: "#111", lineWidth: 2, backgroundColor: "#fff" }); 
   $("#signature-approve").jSignature({ width: 120, height: 60, color: "#111", lineWidth: 2, backgroundColor: "#fff" }); 
@@ -15,7 +32,48 @@ $(function(){
   $("#clear-signature-approve").click(function() { 
     $("#signature-approve").jSignature("reset"); 
   }); 
-}); 
+});
+
+// 샘플 데이터 입력 설정
+function setupSampleDataInputs() {
+  const sampleInputs = document.querySelectorAll('.sample-input');
+  
+  sampleInputs.forEach(input => {
+    const sampleValue = input.getAttribute('data-sample');
+    if (sampleValue) {
+      // 샘플 데이터를 placeholder 스타일로 표시
+      input.value = sampleValue;
+      input.style.color = '#999';
+      input.style.fontStyle = 'italic';
+      
+      // 포커스 시 샘플 데이터 지우기
+      input.addEventListener('focus', function() {
+        if (this.value === sampleValue) {
+          this.value = '';
+          this.style.color = '#333';
+          this.style.fontStyle = 'normal';
+        }
+      });
+      
+      // 포커스 아웃 시 비어있으면 샘플 데이터 복원
+      input.addEventListener('blur', function() {
+        if (this.value.trim() === '') {
+          this.value = sampleValue;
+          this.style.color = '#999';
+          this.style.fontStyle = 'italic';
+        }
+      });
+      
+      // 입력 시 색상 변경
+      input.addEventListener('input', function() {
+        if (this.value !== sampleValue) {
+          this.style.color = '#333';
+          this.style.fontStyle = 'normal';
+        }
+      });
+    }
+  });
+} 
 
 // 참조부서 동적 추가/삭제 
 function addRefDept() { 

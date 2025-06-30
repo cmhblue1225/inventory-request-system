@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입고요청서 등록</title>
+  
+  <!-- 로컬 라이브러리 -->
+  <!-- jQuery -->
+  <script src="assets/js/libs/jquery-3.6.0.min.js"></script>
+  <!-- jSignature for signature capture -->
+  <script src="assets/js/libs/jSignature.min.js"></script>
+  <!-- ExcelJS -->
+  <script src="assets/js/libs/exceljs.min.js"></script>
+  <!-- FileSaver.js for saving files -->
+  <script src="assets/js/libs/FileSaver.min.js"></script>
+  
+  <!-- 로컬 스타일시트 -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+  <!-- 네비게이션 -->
+  <nav style="background: linear-gradient(45deg, #667eea, #764ba2); padding: 15px; margin: -20px -20px 20px -20px; border-radius: 0 0 15px 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+      <h1 style="color: white; margin: 0; font-size: 24px;">입고요청서 등록</h1>
+      <div style="display: flex; gap: 15px;">
+        <a href="index.html" style="color: white; text-decoration: none; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 20px; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">🏠 메인</a>
+        <a href="search.html" style="color: white; text-decoration: none; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 20px; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">🔍 조회</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="title">입고요청서 등록</div>
+
+  <form id="inForm" onsubmit="return false;">
+    <!-- 기본 정보 테이블 -->
+    <table>
+      <tr>
+        <th>요청일자</th>
+        <td><input type="date" id="reqDate"></td>
+        <th>요청번호</th>
+        <td><input type="text" id="reqNo" placeholder="요청번호"></td>
+        <th>요청자</th>
+        <td><input type="text" id="reqUser" placeholder="요청자 이름"></td>
+        <th>입고 예정일</th>
+        <td><input type="date" id="inDate"></td>
+      </tr>
+      <tr>
+        <th>참조부서</th>
+        <td colspan="7">
+          <div id="refDeptWrap" class="ref-dept-wrap">
+            <input type="text" class="ref-dept-input" name="refDept" placeholder="참조부서">
+          </div>
+          <button type="button" class="add-btn" onclick="addRefDept()">＋</button>
+        </td>
+      </tr>
+    </table>
+
+    <!-- 품목 테이블 -->
+    <table id="itemTable">
+      <tr>
+        <th>순번</th>
+        <th>품명</th>
+        <th>규격</th>
+        <th>단위</th>
+        <th>수량</th>
+        <th>단가</th>
+        <th>금액</th>
+        <th>거래처</th>
+        <th>카테고리</th>
+        <th>입고 창고</th>
+        <th>비고</th>
+      </tr>
+      
+      <!-- 샘플 품목 데이터 (첫 번째 행만) -->
+      <tr>
+        <td>1</td>
+        <td><input type="text" id="item0" placeholder="품명" class="sample-input" data-sample="A4 복사용지"></td>
+        <td><input type="text" id="spec0" placeholder="규격" class="sample-input" data-sample="80g, 500매"></td>
+        <td><input type="text" id="unit0" placeholder="단위" class="sample-input" data-sample="박스"></td>
+        <td><input type="number" id="qty0" placeholder="수량" class="sample-input" data-sample="10"></td>
+        <td><input type="number" id="price0" placeholder="단가" class="sample-input" data-sample="3000"></td>
+        <td><input type="number" id="amount0" placeholder="금액" readonly></td>
+        <td><input type="text" id="vendor0" placeholder="거래처" class="sample-input" data-sample="(주)스마트오피스"></td>
+        <td><input type="text" id="cat0" placeholder="카테고리" class="sample-input" data-sample="문구/사무용품"></td>
+        <td><input type="text" id="wh0" placeholder="입고 창고" class="sample-input" data-sample="본사 창고"></td>
+        <td><input type="text" id="note0" placeholder="비고" class="sample-input" data-sample="일반용"></td>
+      </tr>
+      
+      <!-- 추가 빈 품목 행들 -->
+      <tr><td>2</td><td><input type="text" id="item1" placeholder="품명"></td><td><input type="text" id="spec1" placeholder="규격"></td><td><input type="text" id="unit1" placeholder="단위"></td><td><input type="number" id="qty1" placeholder="수량"></td><td><input type="number" id="price1" placeholder="단가"></td><td><input type="number" id="amount1" readonly></td><td><input type="text" id="vendor1" placeholder="거래처"></td><td><input type="text" id="cat1" placeholder="카테고리"></td><td><input type="text" id="wh1" placeholder="입고 창고"></td><td><input type="text" id="note1" placeholder="비고"></td></tr>
+      <tr><td>3</td><td><input type="text" id="item2" placeholder="품명"></td><td><input type="text" id="spec2" placeholder="규격"></td><td><input type="text" id="unit2" placeholder="단위"></td><td><input type="number" id="qty2" placeholder="수량"></td><td><input type="number" id="price2" placeholder="단가"></td><td><input type="number" id="amount2" readonly></td><td><input type="text" id="vendor2" placeholder="거래처"></td><td><input type="text" id="cat2" placeholder="카테고리"></td><td><input type="text" id="wh2" placeholder="입고 창고"></td><td><input type="text" id="note2" placeholder="비고"></td></tr>
+      <tr><td>4</td><td><input type="text" id="item3" placeholder="품명"></td><td><input type="text" id="spec3" placeholder="규격"></td><td><input type="text" id="unit3" placeholder="단위"></td><td><input type="number" id="qty3" placeholder="수량"></td><td><input type="number" id="price3" placeholder="단가"></td><td><input type="number" id="amount3" readonly></td><td><input type="text" id="vendor3" placeholder="거래처"></td><td><input type="text" id="cat3" placeholder="카테고리"></td><td><input type="text" id="wh3" placeholder="입고 창고"></td><td><input type="text" id="note3" placeholder="비고"></td></tr>
+      <tr><td>5</td><td><input type="text" id="item4" placeholder="품명"></td><td><input type="text" id="spec4" placeholder="규격"></td><td><input type="text" id="unit4" placeholder="단위"></td><td><input type="number" id="qty4" placeholder="수량"></td><td><input type="number" id="price4" placeholder="단가"></td><td><input type="number" id="amount4" readonly></td><td><input type="text" id="vendor4" placeholder="거래처"></td><td><input type="text" id="cat4" placeholder="카테고리"></td><td><input type="text" id="wh4" placeholder="입고 창고"></td><td><input type="text" id="note4" placeholder="비고"></td></tr>
+      <tr><td>6</td><td><input type="text" id="item5" placeholder="품명"></td><td><input type="text" id="spec5" placeholder="규격"></td><td><input type="text" id="unit5" placeholder="단위"></td><td><input type="number" id="qty5" placeholder="수량"></td><td><input type="number" id="price5" placeholder="단가"></td><td><input type="number" id="amount5" readonly></td><td><input type="text" id="vendor5" placeholder="거래처"></td><td><input type="text" id="cat5" placeholder="카테고리"></td><td><input type="text" id="wh5" placeholder="입고 창고"></td><td><input type="text" id="note5" placeholder="비고"></td></tr>
+      <tr><td>7</td><td><input type="text" id="item6" placeholder="품명"></td><td><input type="text" id="spec6" placeholder="규격"></td><td><input type="text" id="unit6" placeholder="단위"></td><td><input type="number" id="qty6" placeholder="수량"></td><td><input type="number" id="price6" placeholder="단가"></td><td><input type="number" id="amount6" readonly></td><td><input type="text" id="vendor6" placeholder="거래처"></td><td><input type="text" id="cat6" placeholder="카테고리"></td><td><input type="text" id="wh6" placeholder="입고 창고"></td><td><input type="text" id="note6" placeholder="비고"></td></tr>
+      <tr><td>8</td><td><input type="text" id="item7" placeholder="품명"></td><td><input type="text" id="spec7" placeholder="규격"></td><td><input type="text" id="unit7" placeholder="단위"></td><td><input type="number" id="qty7" placeholder="수량"></td><td><input type="number" id="price7" placeholder="단가"></td><td><input type="number" id="amount7" readonly></td><td><input type="text" id="vendor7" placeholder="거래처"></td><td><input type="text" id="cat7" placeholder="카테고리"></td><td><input type="text" id="wh7" placeholder="입고 창고"></td><td><input type="text" id="note7" placeholder="비고"></td></tr>
+      <tr><td>9</td><td><input type="text" id="item8" placeholder="품명"></td><td><input type="text" id="spec8" placeholder="규격"></td><td><input type="text" id="unit8" placeholder="단위"></td><td><input type="number" id="qty8" placeholder="수량"></td><td><input type="number" id="price8" placeholder="단가"></td><td><input type="number" id="amount8" readonly></td><td><input type="text" id="vendor8" placeholder="거래처"></td><td><input type="text" id="cat8" placeholder="카테고리"></td><td><input type="text" id="wh8" placeholder="입고 창고"></td><td><input type="text" id="note8" placeholder="비고"></td></tr>
+      <tr><td>10</td><td><input type="text" id="item9" placeholder="품명"></td><td><input type="text" id="spec9" placeholder="규격"></td><td><input type="text" id="unit9" placeholder="단위"></td><td><input type="number" id="qty9" placeholder="수량"></td><td><input type="number" id="price9" placeholder="단가"></td><td><input type="number" id="amount9" readonly></td><td><input type="text" id="vendor9" placeholder="거래처"></td><td><input type="text" id="cat9" placeholder="카테고리"></td><td><input type="text" id="wh9" placeholder="입고 창고"></td><td><input type="text" id="note9" placeholder="비고"></td></tr>
+      
+      <!-- 합계 행 -->
+      <tr>
+        <td colspan="6" class="bold" style="text-align:right;">합계</td>
+        <td class="bold"><input type="number" id="total" value="0" readonly></td>
+        <td colspan="4"></td>
+      </tr>
+    </table>
+
+    <!-- 비고 테이블 -->
+    <table>
+      <tr>
+        <th>비고</th>
+        <td colspan="10">
+          <textarea id="remark" placeholder="특별 요청사항이나 비고사항을 입력하세요."></textarea>
+        </td>
+      </tr>
+    </table>
+
+    <!-- 거래처 정보 테이블 -->
+    <table>
+      <tr>
+        <th>거래처 담당자</th>
+        <td><input type="text" id="manager" placeholder="담당자 이름"></td>
+        <th>거래처 연락처</th>
+        <td><input type="text" id="contact" placeholder="연락처"></td>
+        <th>거래처 이메일</th>
+        <td><input type="email" id="email" placeholder="이메일 주소"></td>
+      </tr>
+    </table>
+
+    <!-- 서명 테이블 -->
+    <table>
+      <tr>
+        <th>요청자 서명</th>
+        <td class="signature">
+          <div class="signature-pad-wrap">
+            <div id="signature-request" class="signature-pad"></div>
+            <button type="button" class="clear-signature" id="clear-signature-request">지우기</button>
+          </div>
+        </td>
+        <th>검토자 서명</th>
+        <td class="signature">
+          <div class="signature-pad-wrap">
+            <div id="signature-review" class="signature-pad"></div>
+            <button type="button" class="clear-signature" id="clear-signature-review">지우기</button>
+          </div>
+        </td>
+        <th>승인자 서명</th>
+        <td class="signature">
+          <div class="signature-pad-wrap">
+            <div id="signature-approve" class="signature-pad"></div>
+            <button type="button" class="clear-signature" id="clear-signature-approve">지우기</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <br>
+
+    <!-- 액션 버튼들 -->
+    <button type="button" onclick="downloadExcel()">엑셀로 출력</button>
+    <button type="button" onclick="printDocument()">인쇄하기</button>
+    <button type="button" onclick="showSaveDialog()">💾 저장</button>
+    <button type="button" onclick="showLoadDialog()">📂 불러오기</button>
+  </form>
+
+  <!-- 저장 다이얼로그 -->
+  <div id="saveDialog" class="dialog-overlay" style="display: none;">
+    <div class="dialog">
+      <h3>💾 데이터 저장</h3>
+      <div class="form-group">
+        <label>저장할 이름:</label>
+        <input type="text" id="saveNameInput" placeholder="예: 입고요청서_20241226">
+      </div>
+      <div class="dialog-buttons">
+        <button onclick="saveData()">저장</button>
+        <button onclick="closeSaveDialog()">취소</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 불러오기 다이얼로그 -->
+  <div id="loadDialog" class="dialog-overlay" style="display: none;">
+    <div class="dialog">
+      <h3>📂 데이터 불러오기</h3>
+      <div class="saved-list" id="savedDataList">
+        <!-- 저장된 데이터 목록이 여기에 표시됩니다 -->
+      </div>
+      <div class="dialog-buttons">
+        <button onclick="closeLoadDialog()">취소</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 메인 JavaScript 파일 -->
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>
